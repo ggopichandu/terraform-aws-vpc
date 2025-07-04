@@ -4,9 +4,9 @@ alt text
 
 This module is developed for joindevops.com. We are creating following resources. This module creates resources in first 2 AZ for HA.
 
-    VPC
-    Internet Gateway
-    Internet and VPC attachment
+* VPC
+* Internet Gateway
+* Internet and VPC attachment
     2 Public Subnets.
     2 Private Subnes
     2 Database Subnets
