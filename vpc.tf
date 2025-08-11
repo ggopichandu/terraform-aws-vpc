@@ -3,7 +3,6 @@ resource "aws_vpc" "main" {
   instance_tenancy = "default"
   enable_dns_hostnames = var.enable_dns_hostnames
 
-
   tags = merge(
     var.common_tags,
     var.vpc_tags,
@@ -26,9 +25,10 @@ resource "aws_internet_gateway" "gw" {
 }
 
 ### Public Subnet ###
-resource "aws_subnet" "public_subnet" {
+resource "aws_subnet" "public" {
   count = length(var.public_subnet_cidrs) 
-  availability_zone = local.az_names[count.index] 
+  availability_zone = local.az_names[count.index]
+  map_public_ip_on_launch = true
   vpc_id     = aws_vpc.main.id
   cidr_block = var.public_subnet_cidrs[count.index]
 
@@ -42,7 +42,7 @@ resource "aws_subnet" "public_subnet" {
 }
 
 ### Private Subnet ###
-resource "aws_subnet" "private_subnet" {
+resource "aws_subnet" "private" {
   count = length(var.private_subnet_cidrs) 
   availability_zone = local.az_names[count.index] 
   vpc_id     = aws_vpc.main.id
@@ -58,7 +58,7 @@ resource "aws_subnet" "private_subnet" {
 }
 
 ### Database Subnet ###
-resource "aws_subnet" "database_subnet" {
+resource "aws_subnet" "database" {
   count = length(var.database_subnet_cidrs) 
   availability_zone = local.az_names[count.index] 
   vpc_id     = aws_vpc.main.id
@@ -75,7 +75,7 @@ resource "aws_subnet" "database_subnet" {
 
 resource "aws_db_subnet_group" "default" {
 name = "${local.resource_name}"  
-subnet_ids = aws_subnet.database_subnet[*].id
+subnet_ids = aws_subnet.database[*].id
 
 tags = merge(
   var.common_tags,
