@@ -23,7 +23,7 @@ This module is developed for joindevops.com. We are creating following resources
 
 Inputs
 
-    project_name (Required): User should mention their project name. Type is string.
+* project_name (Required): User should mention their project name. Type is string.
     environment (Optional): Default value is dev. Type is string.
     common_tags (Required): User should provide their tags related to their project. Type is map.
     vpc_cidr (Optional): Default value is 10.0.0.0/16. Type is string.
