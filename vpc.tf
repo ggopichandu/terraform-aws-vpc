@@ -36,7 +36,7 @@ resource "aws_subnet" "public" {
     var.common_tags,
     var.public_subnet_cidr_tags,
     {
-       Name = "${local.resource_name}-public-${local.az_names[count.index]}"
+       Name = "${local.resource_name}-public-${local.az_names[count.index]}" # expense-dev-public-us-east-1a, # expense-dev-public-us-east-1b
     }
   )
 }
@@ -167,7 +167,7 @@ resource "aws_route" "database_route_nat" {
     nat_gateway_id = aws_nat_gateway.nat.id
 }
 
-### Route table and subnet associations ###
+#### Route table and subnet associations ####
 resource "aws_route_table_association" "public" {
   count = length(var.public_subnet_cidrs)
   subnet_id      = element(aws_subnet.public[*].id, count.index)
